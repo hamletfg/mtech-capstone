@@ -1,0 +1,2 @@
+{"level":"info","message":"Home page accessed"}
+{"level":"http","message":"::1 - - [11/Jul/2025:15:27:44 +0000] \"GET / HTTP/1.1\" 200 25 \"-\" \"curl/8.10.1\""}
