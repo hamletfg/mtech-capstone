@@ -4,6 +4,7 @@ const express = require('express');
 const morgan = require('morgan');
 const winston = require('winston');
 const db = require('./db/db'); // Import db connection
+const coursesRouter = require('./routes/courses'); // Courses route
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -25,6 +26,9 @@ app.use(
     },
   })
 );
+
+// Routes
+app.use('/api/courses', coursesRouter); // Addthis line for course routes
 
 app.get('/', (req, res) => {
   logger.info('Home page accessed');
