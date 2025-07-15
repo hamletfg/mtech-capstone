@@ -1,5 +1,5 @@
-const { Pool } = require('pg');
-require('dotenv').config();
+const { Pool } = require("pg");
+require("dotenv").config();
 
 const pool = new Pool({
   user: process.env.DB_USER,
@@ -10,11 +10,11 @@ const pool = new Pool({
 });
 
 // Test the connection
-poolquery('SELECT NOW()', (err, res) => {
+pool.query("SELECT NOW()", (err, res) => {
   if (err) {
-    console.error('Error connecting to the database:', err);
+    console.error("Error connecting to the database:", err);
   } else {
-    console.log('Successfully connected to PostgreSQL database');
+    console.log("Successfully connected to PostgreSQL database");
   }
 });
 
