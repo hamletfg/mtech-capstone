@@ -36,13 +36,49 @@ app.get("/", (req, res) => {
 });
 
 // Test route
-app.get("/api/test", async (req, res) => {
+app.get("/api/courses", async (req, res) => {
   try {
     const result = await db.query("SELECT * FROM courses");
     logger.info("Courses retrieved successfully");
     res.json(result.rows);
   } catch (err) {
     logger.error("Database querry error:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/api/users", async (req, res) => {
+  try {
+    const result = await db.query("SELECT * FROM users");
+    logger.info("Users retrieved successfully");
+    res.json(result.rows);
+  } catch (err) {
+    logger.error("Database query error", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/api/addresses", async (req, res) => {
+  try {
+    const result = await db.query("SELECT * FROM addresses");
+    logger.info("Addresses retrieved successfully");
+    res.json(result.rows);
+  } catch (err) {
+    logger.error("Database query error", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/api/users/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await db.query("SELECT * FROM users WHERE user_id = $1", [
+      id,
+    ]);
+    //logger.info("Addresses retrieved successfully");
+    res.json(result.rows);
+  } catch (err) {
+    //logger.error("Database query error", err);
     res.status(500).json({ error: "Internal server error" });
   }
 });

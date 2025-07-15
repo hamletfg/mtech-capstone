@@ -1,1 +1,13 @@
-GET http://localhost:3001/api/test
+GET http://localhost:3001/api/users
+
+###
+
+GET http://localhost:3001/api/courses
+
+###
+
+GET http://localhost:3001/api/addresses
+
+###
+
+GET http://localhost:3001/api/users/3
