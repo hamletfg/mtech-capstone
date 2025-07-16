@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const winston = require("winston");
 const db = require("./db/db"); // Import db connection
 const coursesRouter = require("./routes/courses"); // Courses route
+const joinRouter = require("./routes/join");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -29,23 +30,7 @@ app.use(
 
 // Routes
 app.use("/api/courses", coursesRouter); // Addthis line for course routes
-
-app.get("/", (req, res) => {
-  logger.info("Home page accessed");
-  res.send("Hello, Winston and Morgan");
-});
-
-// Test route
-app.get("/api/courses", async (req, res) => {
-  try {
-    const result = await db.query("SELECT * FROM courses");
-    logger.info("Courses retrieved successfully");
-    res.json(result.rows);
-  } catch (err) {
-    logger.error("Database querry error:", err);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
+app.use("/api/join", joinRouter);
 
 app.get("/api/users", async (req, res) => {
   try {

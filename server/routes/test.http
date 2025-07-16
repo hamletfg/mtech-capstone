@@ -10,7 +10,18 @@ GET http://localhost:3001/api/addresses
 
 ###
 
-GET http://localhost:3001/api/users/3
+GET http://localhost:3001/api/users/2003
 
 ###
+
+POST http://localhost:3001/api/join
+Content-Type: application/json
+
+{
+    "street": "64 Villager Way",
+    "city": "Boston",
+    "state": "MA",
+    "zip_code": 54684,
+    "country": "USA"
+}
 
