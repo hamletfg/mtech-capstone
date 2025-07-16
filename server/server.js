@@ -75,10 +75,10 @@ app.get("/api/users/:id", async (req, res) => {
     const result = await db.query("SELECT * FROM users WHERE user_id = $1", [
       id,
     ]);
-    //logger.info("Addresses retrieved successfully");
+    logger.info("Addresses retrieved successfully");
     res.json(result.rows);
   } catch (err) {
-    //logger.error("Database query error", err);
+    logger.error("Database query error", err);
     res.status(500).json({ error: "Internal server error" });
   }
 });
