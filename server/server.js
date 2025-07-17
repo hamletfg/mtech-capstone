@@ -58,14 +58,34 @@ app.post("/api/users/:id/registration", async (req, res) => {
   const { id } = req.params;
   try {
     const courseId = req.body.course_id;
-    console.log(id, courseId);
-    const result = await db.query(
-      `INSERT INTO registrations (user_id, course_id)
-VALUES ($1, $2)`,
-      [id, courseId]
+
+    const capacityReq = await db.query(
+      `SELECT maximum_capacity FROM courses 
+      WHERE course_id = $1`,
+      [courseId]
     );
-    logger.info(`User ${id} successfully registered for course ${courseId}`);
-    res.json(result);
+    const maxCapacity = Number(capacityReq.rows[0].maximum_capacity);
+
+    const registrationReq = await db.query(
+      `SELECT COUNT(*) FROM registrations WHERE course_id = $1`,
+      [courseId]
+    );
+    const registrationNum = Number(registrationReq.rows[0].count);
+
+    console.log(registrationNum, maxCapacity);
+
+    if (maxCapacity > registrationNum) {
+      const registerResult = await db.query(
+        `INSERT INTO registrations (user_id, course_id)
+  VALUES ($1, $2)`,
+        [id, courseId]
+      );
+      logger.info(`User ${id} successfully registered for course ${courseId}`);
+      res.json(registerResult);
+    } else if (maxCapacity <= registrationNum) {
+      logger.info("Max capacity reached for selected course");
+      res.json({ error: "Max capacity reached" });
+    }
   } catch (err) {
     logger.error("Database query error", err);
     res.status(500).json({ error: "Internal server error" });

@@ -10,11 +10,11 @@ GET http://localhost:3001/api/addresses
 
 ###
 
-POST http://localhost:3001/api/users/2004/registration
+POST http://localhost:3001/api/users/2008/registration
 Content-Type: application/json
 
 {
-    "course_id": "CSCI-2009"
+    "course_id": "CSCI-1001"
 }
 
 ###
