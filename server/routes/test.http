@@ -18,10 +18,15 @@ POST http://localhost:3001/api/join
 Content-Type: application/json
 
 {
-    "street": "64 Villager Way",
-    "city": "Boston",
-    "state": "MA",
-    "zip_code": 54684,
+    "email": "student@example.com",
+    "password": "securePassword123",
+    "firstName": "John",
+    "lastName": "Doe",
+    "telephone": "123-456-7890",
+    "street": "123 Campus Drive",
+    "city": "College Town",
+    "state": "UT",
+    "zip_code": "84123",
     "country": "USA"
 }
 
