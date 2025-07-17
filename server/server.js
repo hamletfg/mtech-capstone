@@ -54,14 +54,18 @@ app.get("/api/addresses", async (req, res) => {
   }
 });
 
-app.get("/api/users/:id", async (req, res) => {
+app.post("/api/users/:id/registration", async (req, res) => {
   const { id } = req.params;
   try {
-    const result = await db.query("SELECT * FROM users WHERE user_id = $1", [
-      id,
-    ]);
-    logger.info("Addresses retrieved successfully");
-    res.json(result.rows);
+    const courseId = req.body.course_id;
+    console.log(id, courseId);
+    const result = await db.query(
+      `INSERT INTO registrations (user_id, course_id)
+VALUES ($1, $2)`,
+      [id, courseId]
+    );
+    logger.info(`User ${id} successfully registered for course ${courseId}`);
+    res.json(result);
   } catch (err) {
     logger.error("Database query error", err);
     res.status(500).json({ error: "Internal server error" });
