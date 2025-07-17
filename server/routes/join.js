@@ -1,9 +1,9 @@
-const express = require('express');
+const express = require("express");
 const joinRouter = express.Router();
-const db = require('../db/db');
+const db = require("../db/db");
 
 // Get all courses
-joinRouter.post('/', async (req, res) => {
+joinRouter.post("/", async (req, res) => {
   try {
     const { street, city, state, zip_code, country } = req.body;
 
@@ -19,7 +19,7 @@ joinRouter.post('/', async (req, res) => {
     res.json(addressId);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Failed to fetch addresses' });
+    res.status(500).json({ error: "Failed to fetch addresses" });
   }
 });
 
