@@ -6,6 +6,7 @@ const winston = require("winston");
 const db = require("./db/db"); // Import db connection
 const coursesRouter = require("./routes/courses"); // Courses route
 const joinRouter = require("./routes/join");
+const registerRouter = require("./routes/register");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -29,8 +30,9 @@ app.use(
 );
 
 // Routes
-app.use("/api/courses", coursesRouter); // Addthis line for course routes
+app.use("/api/courses", coursesRouter);
 app.use("/api/join", joinRouter);
+app.use("/", registerRouter);
 
 app.get("/api/users", async (req, res) => {
   try {
@@ -54,38 +56,81 @@ app.get("/api/addresses", async (req, res) => {
   }
 });
 
-app.post("/api/users/:id/registration", async (req, res) => {
+app.get("/api/registrations", async (req, res) => {
+  try {
+    const result = await db.query("SELECT * FROM registrations");
+    logger.info("Registrations retrieved successfully");
+    res.json(result.rows);
+  } catch (err) {
+    logger.error("Database query error", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+//ENDPOINTS THAT NEED TO BE BROKEN OUT INTO ROUTES
+
+//user can view their enrollments
+app.get("/api/registrations/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const courseId = req.body.course_id;
+    const userCourses = await db.query(
+      `SELECT * FROM registrations WHERE user_id = $1`,
+      [id]
+    );
+    res.json(userCourses.rows);
+  } catch (err) {
+    logger.error("Database query error", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
-    const capacityReq = await db.query(
-      `SELECT maximum_capacity FROM courses 
-      WHERE course_id = $1`,
+//user can drop a specific course
+app.delete("/api/registrations/:id/unregister", async (req, res) => {
+  const { id } = req.params;
+  const courseId = req.body.course_id;
+  try {
+    const unregisterUser = await db.query(
+      `DELETE FROM registrations WHERE user_id = $1 AND course_id = $2`,
+      [id, courseId]
+    );
+    res.json({
+      message: `User ${id} unregistered from course ${courseId}`,
+      info: unregisterUser,
+    });
+  } catch (err) {
+    logger.error("Database query error", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+//admin user can view everyone registered in a specific course
+app.get("/api/admin-tools/registrations/courses", async (req, res) => {
+  const courseId = req.body.course_id;
+  try {
+    const viewStudents = await db.query(
+      `SELECT * FROM registrations WHERE course_id = $1`,
       [courseId]
     );
-    const maxCapacity = Number(capacityReq.rows[0].maximum_capacity);
+    res.json(viewStudents.rows);
+  } catch (err) {
+    logger.error("Database query error", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
-    const registrationReq = await db.query(
-      `SELECT COUNT(*) FROM registrations WHERE course_id = $1`,
-      [courseId]
+//admin user can remove a student from a course
+app.delete("/api/admin-tools/registrations/remove-user", async (req, res) => {
+  const userId = req.body.user_id;
+  const courseId = req.body.course_id;
+  try {
+    const removeStudent = await db.query(
+      `DELETE FROM registrations WHERE user_id = $1 AND course_id = $2`,
+      [userId, courseId]
     );
-    const registrationNum = Number(registrationReq.rows[0].count);
-
-    console.log(registrationNum, maxCapacity);
-
-    if (maxCapacity > registrationNum) {
-      const registerResult = await db.query(
-        `INSERT INTO registrations (user_id, course_id)
-  VALUES ($1, $2)`,
-        [id, courseId]
-      );
-      logger.info(`User ${id} successfully registered for course ${courseId}`);
-      res.json(registerResult);
-    } else if (maxCapacity <= registrationNum) {
-      logger.info("Max capacity reached for selected course");
-      res.json({ error: "Max capacity reached" });
-    }
+    res.json({
+      message: `Admin removed user ${userId} from course ${courseId}`,
+      info: removeStudent,
+    });
   } catch (err) {
     logger.error("Database query error", err);
     res.status(500).json({ error: "Internal server error" });

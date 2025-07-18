@@ -10,11 +10,47 @@ GET http://localhost:3001/api/addresses
 
 ###
 
-POST http://localhost:3001/api/users/2008/registration
+GET http://localhost:3001/api/registrations
+
+###
+
+GET http://localhost:3001/api/registrations/2007
+
+###
+
+DELETE http://localhost:3001/api/registrations/2008/unregister
 Content-Type: application/json
 
 {
-    "course_id": "CSCI-1001"
+    "course_id": "CSCI-2001"
+}
+
+###
+
+GET http://localhost:3001/api/admin-tools/registrations/courses
+Content-Type: application/json
+
+{
+    "course_id": "CSCI-2001"
+}
+
+###
+
+DELETE http://localhost:3001/api/admin-tools/registrations/remove-user
+Content-Type: application/json
+
+{
+    "user_id": 2007,
+    "course_id": "CSCI-2001"
+}
+
+###
+
+POST http://localhost:3001/api/users/2004/registration
+Content-Type: application/json
+
+{
+    "course_id": "CSCI-2013"
 }
 
 ###
