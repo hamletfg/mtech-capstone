@@ -34,7 +34,7 @@ app.use("/api/courses", coursesRouter);
 app.use("/api/join", joinRouter);
 app.use("/", registerRouter);
 
-app.get("/api/users", async (req, res) => {
+app.get("/api/admin-tools/users", async (req, res) => {
   try {
     const result = await db.query("SELECT * FROM users");
     logger.info("Users retrieved successfully");
