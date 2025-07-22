@@ -16,6 +16,7 @@ joinRouter.post(
   checkValidationErrors,
   async (req, res) => {
     // Get a client from the connection pool
+    console.log("endpoint hit");
     const client = await db.pool.connect();
 
     try {

@@ -2,6 +2,7 @@
 
 const express = require("express");
 const morgan = require("morgan");
+const cors = require("cors");
 const winston = require("winston");
 const db = require("./db/db"); // Import db connection
 const coursesRouter = require("./routes/courses"); // Courses route
@@ -10,6 +11,13 @@ const registerRouter = require("./routes/register");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 
 const logger = winston.createLogger({
   level: "http",
