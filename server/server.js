@@ -8,6 +8,7 @@ const db = require("./db/db"); // Import db connection
 const coursesRouter = require("./routes/courses"); // Courses route
 const joinRouter = require("./routes/join");
 const registerRouter = require("./routes/register");
+const loginRouter = require("./routes/login");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -41,6 +42,7 @@ app.use(
 app.use("/api/courses", coursesRouter);
 app.use("/api/join", joinRouter);
 app.use("/", registerRouter);
+app.use("/", loginRouter);
 
 app.get("/api/admin-tools/users", async (req, res) => {
   try {
@@ -77,7 +79,7 @@ app.get("/api/registrations", async (req, res) => {
 
 //ENDPOINTS THAT NEED TO BE BROKEN OUT INTO ROUTES
 
-//user can view their enrollments
+//user can view their enrollments (this goes through users profile)
 app.get("/api/registrations/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -92,7 +94,7 @@ app.get("/api/registrations/:id", async (req, res) => {
   }
 });
 
-//user can drop a specific course
+//user can drop a specific course (this goes through users profile)
 app.delete("/api/registrations/:id/unregister", async (req, res) => {
   const { id } = req.params;
   const courseId = req.body.course_id;
@@ -111,7 +113,7 @@ app.delete("/api/registrations/:id/unregister", async (req, res) => {
   }
 });
 
-//admin user can view everyone registered in a specific course
+//admin user can view everyone registered in a specific course (admin registration viewing)
 app.get("/api/admin-tools/registrations/courses", async (req, res) => {
   const courseId = req.body.course_id;
   try {
@@ -126,7 +128,7 @@ app.get("/api/admin-tools/registrations/courses", async (req, res) => {
   }
 });
 
-//admin user can remove a student from a course
+//admin user can remove a student from a course (admin registration viewing)
 app.delete("/api/admin-tools/registrations/remove-user", async (req, res) => {
   const userId = req.body.user_id;
   const courseId = req.body.course_id;
