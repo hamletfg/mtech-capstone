@@ -7,6 +7,7 @@ const db = require('./db/db'); // Import db connection
 const coursesRouter = require('./routes/courses'); // Courses route
 const joinRouter = require('./routes/join');
 const registerRouter = require('./routes/register');
+const loginRouter = require('./routes/login');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -33,6 +34,7 @@ app.use(
 app.use('/api/courses', coursesRouter);
 app.use('/api/join', joinRouter);
 app.use('/', registerRouter);
+app.use('/', loginRouter);
 
 app.get('/api/admin-tools/users', async (req, res) => {
   try {
