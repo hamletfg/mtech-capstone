@@ -2,7 +2,7 @@
 
 const express = require('express');
 const morgan = require('morgan');
-const logger = require('./logger');
+const winston = require('winston');
 const db = require('./db/db'); // Import db connection
 const coursesRouter = require('./routes/courses'); // Courses route
 const joinRouter = require('./routes/join');
@@ -11,6 +11,14 @@ const loginRouter = require('./routes/login');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+const logger = winston.createLogger({
+  level: 'http',
+  transports: [
+    new winston.transports.Console({ level: 'error' }),
+    new winston.transports.File({ filename: 'logfile.log', level: 'info' }),
+  ],
+});
 
 // Existing middleware
 app.use(express.json());
@@ -25,8 +33,8 @@ app.use(
 // Routes
 app.use('/api/courses', coursesRouter);
 app.use('/api/join', joinRouter);
-app.use('/api/register', registerRouter);
-app.use('/api/login', loginRouter);
+app.use('/', registerRouter);
+app.use('/', loginRouter);
 
 app.get('/api/admin-tools/users', async (req, res) => {
   try {
@@ -52,16 +60,8 @@ app.get('/api/addresses', async (req, res) => {
 
 app.get('/api/registrations', async (req, res) => {
   try {
-    // Get the user ID from the authenticated token
-    const userId = req.user.id;
-
-    // Modify query to only select registratiopns for this specific user
-    const result = await db.query(
-      'SELECT * FROM registrations WHERE user_id = $1',
-      [userId]
-    );
-
-    logger.info(`Registrations retrieved successfully for ${userId}`);
+    const result = await db.query('SELECT * FROM registrations');
+    logger.info('Registrations retrieved successfully');
     res.json(result.rows);
   } catch (err) {
     logger.error('Database query error', err);

@@ -5,21 +5,12 @@ import Input from "./_components/Input";
 
 export default function Home() {
   return (
-    <div className="p-10 w-fit mx-auto flex flex-col justfity-center items-center">
-      <Input
-        type="email"
-        id="email"
-        name="email"
-        placeholder="email@example.com"
-      />
-      <Input
-        type="password"
-        id="password"
-        name="password"
-        placeholder="password"
-      />
+    <div className="p-10 w-fit mx-auto flex justfity-center items-center">
       <Link href="/login">
         <Button>Login</Button>
+      </Link>
+      <Link href="/join">
+        <Button>Join</Button>
       </Link>
     </div>
   );
