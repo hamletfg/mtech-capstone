@@ -1,0 +1,21 @@
+# Login/authentication tests
+
+@baseUrl = http://localhost:3001/api
+
+### Login as student
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "student@example.com",
+    "password": "securePassword123"
+}
+
+### Login as admin
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "admin@example.com",
+    "password": "adminPassword123"
+}

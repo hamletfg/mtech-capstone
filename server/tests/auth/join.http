@@ -1,0 +1,22 @@
+# Registration/signup tests
+
+@baseUrl = http://localhost:3001/api
+
+POST {{baseUrl}}/join
+Content-Type: application/json
+
+{
+    "email": "student@example.com",
+    "password": "securePassword123",
+    "firstName": "John",
+    "lastName": "Doe",
+    "telephone": "123-456-7890",
+    "street": "123 Campus Drive",
+    "city": "College Town",
+    "state": "UT",
+    "zip_code": "84123",
+    "country": "USA"
+}
+
+###
+GET {{baseUrl}}/admin-tools/users

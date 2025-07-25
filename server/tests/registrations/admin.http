@@ -1,0 +1,13 @@
+# Admin registration operations
+
+@baseUrl = http://localhost:3001/api
+@authToken = {{$dotenv adminToken}}
+
+### Get all registrations (admin only)
+GET {{baseUrl}}/admin-tools/registrations/courses
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "course_id": "CSCI-2001"
+}
