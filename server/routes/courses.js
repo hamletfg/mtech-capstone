@@ -16,9 +16,10 @@ coursesRouter.get("/", async (req, res) => {
 // Get course by ID
 coursesRouter.get("/:id", async (req, res) => {
   try {
-    const { rows } = await db.query("SELECT * FROM course WHERE id = $1", [
-      req.params.id,
-    ]);
+    const { rows } = await db.query(
+      "SELECT * FROM courses WHERE course_id = $1",
+      [req.params.id]
+    );
     if (rows.length === 0) {
       return res.status(404).json({ error: "Course not found" });
     }

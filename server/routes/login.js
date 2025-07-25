@@ -1,29 +1,3 @@
-<<<<<<< HEAD
-const express = require('express');
-const bcrypt = require('bcrypt');
-const { body, validationResult } = require('express-validator');
-const router = express.Router();
-const db = require('../db/db');
-const logger = require('../logger');
-const { generateToken } = require('../middleware/auth');
-
-// Validation middleware
-const validateLogin = [
-  body('email')
-    .isEmail()
-    .normalizeEmail()
-    .withMessage('Valid email is required'),
-  body('password').notEmpty().withMessage('Password is required'),
-];
-
-// POST /api/login
-router.post('/', validateLogin, async (req, res) => {
-  try {
-    // Check for validation errors
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-=======
 const express = require("express");
 const bcrypt = require("bcrypt");
 const { body } = require("express-validator");
@@ -71,26 +45,25 @@ loginRouter.post(
     } catch (err) {
       logger.error("Login error:", err);
       res.status(500).json({ error: "Internal server error" });
->>>>>>> e85b7a6ab385845460dd51c20fa9e9eb83ec8133
     }
 
     const { email, password } = req.body;
 
     // Find user
-    const result = await db.query('SELECT * FROM users WHERE email = $1', [
+    const result = await db.query("SELECT * FROM users WHERE email = $1", [
       email,
     ]);
 
     const user = result.rows[0];
 
     if (!user) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ error: "Invalid credentials" });
     }
 
     // Check password
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ error: "Invalid credentials" });
     }
 
     // Generate JWT token
@@ -107,10 +80,7 @@ loginRouter.post(
         lastName: user.last_name,
       },
     });
-  } catch (err) {
-    logger.error('Login error:', err);
-    res.status(500).json({ error: 'Internal server error' });
   }
-});
+);
 
-module.exports = router;
+module.exports = loginRouter;
