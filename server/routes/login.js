@@ -45,6 +45,8 @@ loginRouter.post(
     } catch (err) {
       logger.error("Login error:", err);
       res.status(500).json({ error: "Internal server error" });
+      logger.error("Login error:", err);
+      res.status(500).json({ error: "Internal server error" });
     }
 
     const { email, password } = req.body;
