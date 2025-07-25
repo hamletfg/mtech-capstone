@@ -6,6 +6,10 @@ GET http://localhost:3001/api/courses
 
 ###
 
+GET http://localhost:3001/api/courses/CSCI-2001
+
+###
+
 GET http://localhost:3001/api/addresses
 
 ###
