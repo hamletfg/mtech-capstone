@@ -1,0 +1,19 @@
+# Student registration operations
+
+@baseUrl = http://localhost:3001/api
+@authToken = {{$dotenv userToken}}
+
+@userId = {{userId}}
+
+### Get user registrations
+GET {{baseUrl}}/registrations
+Authorization: Bearer {{authToken}}
+
+### Register for course
+POST {{baseUrl}}/users/{{userId}}/registration
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "course_id": "CSCI-2013"
+}
