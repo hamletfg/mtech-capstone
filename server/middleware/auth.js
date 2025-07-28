@@ -1,17 +1,17 @@
-const jwt = require("jsonwebtoken");
-const logger = require("../logger");
+const jwt = require('jsonwebtoken');
+const logger = require('../logger');
 
 const auth = {
   // Verify JWT token
   verifyToken: (req, res, next) => {
     try {
       // Get token from header
-      const token = req.headers.authorization?.split(" ")[1];
+      const token = req.headers.authorization?.split(' ')[1];
 
       if (!token) {
         return res
           .status(401)
-          .json({ error: "Access denied. No token provided" });
+          .json({ error: 'Access denied. No token provided' });
       }
 
       // Verify token
@@ -19,8 +19,8 @@ const auth = {
       req.user = decoded;
       next();
     } catch (err) {
-      logger.error("JWT verification failed", err);
-      res.status(401).json({ error: "Invalid token" });
+      logger.error('JWT verification failed', err);
+      res.status(401).json({ error: 'Invalid token' });
     }
   },
 
@@ -29,7 +29,7 @@ const auth = {
     if (!req.user.isAdmin) {
       return res
         .status(403)
-        .json({ error: "Access denied. Admin rights required" });
+        .json({ error: 'Access denied. Admin rights required' });
     }
     next();
   },
@@ -43,7 +43,7 @@ const auth = {
         isAdmin: user.is_admin,
       },
       process.env.JWT_SECRET,
-      { expiresIn: "24h" }
+      { expiresIn: '4h' }
     );
   },
 };
