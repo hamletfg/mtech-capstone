@@ -1,1 +1,24 @@
 # Course-related endpoints
+
+### 1. Login to get token (student)
+POST http://localhost:3001/api/login
+Content-Type: application/json
+
+{
+    "email": "student@example.com",
+    "password": "securePassword123"
+}
+
+### 2. Get all courses (with auth)
+GET http://localhost:3001/api/courses
+Authorization: Bearer {{token_from_login}}
+
+### 3. Get specific course (with auth)
+GET http://localhost:3001/api/courses/CSCI-2001
+Authorization: Bearer {{token_from_login}}
+
+### 4. Get courses without auth (should fail)
+GET http://localhost:3001/api/courses
+
+### 5. Get specific course without auth (should fail)
+GET http://localhost:3001/api/courses/CSCI-2001
