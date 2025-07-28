@@ -8,6 +8,7 @@ const coursesRouter = require('./routes/courses'); // Courses route
 const joinRouter = require('./routes/join');
 const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
+const profileRouter = require('./routes/profile');
 const registrationsRouter = require('./routes/registrations');
 
 const app = express();
@@ -37,6 +38,7 @@ app.use('/api/join', joinRouter);
 app.use('/', registerRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/registrations', registrationsRouter);
+app.use('/api/profile', profileRouter);
 
 app.get('/api/admin-tools/users', async (req, res) => {
   try {

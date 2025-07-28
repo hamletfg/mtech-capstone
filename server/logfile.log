@@ -1,0 +1,7 @@
+{"level":"error","message":"Database query error coursesQuery is not defined","stack":"ReferenceError: coursesQuery is not defined\n    at /Users/hamlet/Dev/projects/mtech-capstone/server/routes/profile.js:30:43\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)"}
+{"level":"error","message":"Database query error coursesQuery is not defined","stack":"ReferenceError: coursesQuery is not defined\n    at /Users/hamlet/Dev/projects/mtech-capstone/server/routes/profile.js:30:43\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)"}
+{"level":"error","message":"No user found with ID undefined"}
+{"level":"error","message":"No user found with ID undefined"}
+{"level":"error","message":"No user found with ID undefined"}
+{"level":"error","message":"No user found with ID undefined"}
+{"level":"info","message":"Profile retrieved successfully for user 2011"}

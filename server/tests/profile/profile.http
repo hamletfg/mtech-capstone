@@ -1,0 +1,35 @@
+### Test Set 1: User with registered courses
+### 1. Login as user with courses
+POST http://localhost:3001/api/login
+Content-Type: application/json
+
+{
+    "email": "student@example.com",
+    "password": "securePassword123"
+}
+
+### 2. Get profile (should show user info WITH courses)
+GET http://localhost:3001/api/profile
+Authorization: Bearer {{token_from_login}}
+
+### Test Set 2: User without any courses
+### 3. Login as new user without courses
+POST http://localhost:3001/api/login
+Content-Type: application/json
+
+{
+    "email": "newstudent@example.com",
+    "password": "password123"
+}
+
+### 4. Get profile (should show user info with empty courses array)
+GET http://localhost:3001/api/profile
+Authorization: Bearer {{token_from_login}}
+
+### Test Set 3: Error cases
+### 5. Get profile without token (should fail)
+GET http://localhost:3001/api/profile
+
+### 6. Get profile with invalid token (should fail)
+GET http://localhost:3001/api/profile
+Authorization: Bearer invalid_token_here
