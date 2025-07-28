@@ -1,4 +1,11 @@
-export default function Input({ type, id, name, placeholder, onChange }) {
+export default function Input({
+  type,
+  id,
+  name,
+  placeholder,
+  value,
+  onChange,
+}) {
   return (
     <div>
       <input
@@ -6,6 +13,7 @@ export default function Input({ type, id, name, placeholder, onChange }) {
         id={id}
         name={name}
         placeholder={placeholder}
+        value={value}
         onChange={onChange}
         className="border py-2 px-4 rounded-lg"
         required

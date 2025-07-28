@@ -11,7 +11,7 @@ Content-Type: application/json
 
 ### 2. Get all courses (with auth)
 GET http://localhost:3001/api/courses
-Authorization: Bearer {{token_from_login}}
+Authorization: Bearer {token}
 
 ### 3. Get specific course (with auth)
 GET http://localhost:3001/api/courses/CSCI-2001
