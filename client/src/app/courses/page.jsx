@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default async function Page() {
   const res = await fetch("http://localhost:3001/api/courses");
 
@@ -14,13 +16,26 @@ export default async function Page() {
   console.log(data);
 
   return (
-    <div>
+    <div className="grid grid-cols-4 gap-8 p-10">
       {data.map((course, index) => {
         return (
-          <div key={index}>
-            <div>{course.course_id}</div>
-            <div>{course.title}</div>
-          </div>
+          <Link
+            href={`/courses/${course.course_id}`}
+            key={index}
+            className="border border-gray-500 p-5 rounded-sm overflow-hidden"
+          >
+            <div>
+              <div className="mb-2">
+                <span>{course.course_id}</span>
+              </div>
+              <div className="mb-2">{course.title}</div>
+              <div>
+                <span className="text-sm  line-clamp-3">
+                  {course.description}
+                </span>
+              </div>
+            </div>
+          </Link>
         );
       })}
     </div>
