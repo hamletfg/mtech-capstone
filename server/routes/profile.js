@@ -44,7 +44,7 @@ profileRouter.get('/', verifyToken, async (req, res) => {
 
     if (userResult.rows.length === 0) {
       logger.error(`No user found with ID ${userId}`);
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: 'User info not found' });
     }
 
     // Get courses if user exists
