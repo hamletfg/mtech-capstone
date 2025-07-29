@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Button from "./Button";
 
-export default function FetchCoursesId({ courseId }) {
+export default function FetchCoursesId({ courseId, userId }) {
   const [courseData, setCourseData] = useState([]);
+  //const [id, setId] = useState(null);
 
   useEffect(() => {
     async function fetchCourseData() {
@@ -27,6 +29,7 @@ export default function FetchCoursesId({ courseId }) {
         }
 
         const data = await res.json();
+        console.log(data);
         setCourseData(data);
       } catch (err) {
         console.error(err);
@@ -35,6 +38,32 @@ export default function FetchCoursesId({ courseId }) {
 
     fetchCourseData();
   }, [courseId]);
+
+  const handleRegister = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        throw new Error("No token");
+      }
+
+      const res = await fetch(`/api/register/${courseId}`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error("Error registering");
+      }
+      const data = await res.json();
+      console.log("REGISTERED", courseId, userId, data);
+    } catch (err) {
+      console.error("Error caught:", err);
+    }
+  };
 
   return (
     <div className="p-10">
@@ -55,6 +84,7 @@ export default function FetchCoursesId({ courseId }) {
         <span>Tuition cost: </span>
         {courseData.tuition_cost}
       </div>
+      <Button onclick={handleRegister}>Register</Button>
     </div>
   );
 }
