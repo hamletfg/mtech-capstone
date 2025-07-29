@@ -38,7 +38,7 @@ export default function FetchProfileData({ token }) {
   console.log(profileData);
 
   return (
-    <div>
+    <div className="p-10">
       <h1>
         {profileData.first_name} {profileData.last_name}'s profile
       </h1>
@@ -54,7 +54,16 @@ export default function FetchProfileData({ token }) {
       <p>{profileData.country}</p>
 
       <h2>{profileData.first_name}'s Courses:</h2>
-      <p>{profileData.registeredCourses}</p>
+      <div>
+        {
+          <ul>
+            {Array.isArray(profileData.registeredCourses) &&
+              profileData.registeredCourses.map((course, idx) => (
+                <li key={idx}>{course.title}</li>
+              ))}
+          </ul>
+        }
+      </div>
     </div>
   );
 }
