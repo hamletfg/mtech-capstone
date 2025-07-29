@@ -63,15 +63,15 @@ POST http://localhost:3001/api/join
 Content-Type: application/json
 
 {
-    "email": "student@example.com",
-    "password": "securePassword123",
-    "firstName": "John",
-    "lastName": "Doe",
-    "telephone": "123-456-7890",
-    "street": "123 Campus Drive",
-    "city": "College Town",
-    "state": "UT",
-    "zip_code": "84123",
+    "email": "henry@jekyll.com",
+    "password": "hj7works",
+    "firstName": "Henry",
+    "lastName": "Jekyll",
+    "telephone": "123-456-7899",
+    "street": "Carey St",
+    "city": "London",
+    "state": "PA",
+    "zip_code": "81230",
     "country": "USA"
 }
 

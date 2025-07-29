@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Button from "../_components/Button";
 import Input from "../_components/Input";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function Page() {
@@ -26,7 +27,7 @@ export default function Page() {
       [name]: value,
     }));
   };
-  const joinFunction = async (e) => {
+  const handleJoin = async (e) => {
     e.preventDefault();
     console.log(userData);
 
@@ -54,7 +55,7 @@ export default function Page() {
   return (
     <div className="p-5">
       <form
-        onSubmit={joinFunction}
+        onSubmit={handleJoin}
         className="flex flex-col justify-center items-center gap-5 mx-auto"
       >
         <Input
