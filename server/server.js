@@ -43,13 +43,12 @@ app.use(
 // Routes
 app.use('/api/courses', coursesRouter);
 app.use('/api/join', joinRouter);
-app.use('/', registerRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/registrations', registrationsRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/courses', coursesRouter);
 app.use('/api/join', joinRouter);
-app.use('/', registerRouter);
+app.use('/api/register', registerRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/registrations', registrationsRouter);
 

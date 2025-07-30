@@ -1,19 +1,32 @@
-# Student registration operations
-
-@baseUrl = http://localhost:3001/api
-@authToken = {{$dotenv userToken}}
-
-@userId = {{userId}}
-
-### Get user registrations
-GET {{baseUrl}}/registrations
-Authorization: Bearer {{authToken}}
-
-### Register for course
-POST {{baseUrl}}/users/{{userId}}/registration
-Authorization: Bearer {{authToken}}
+### 1. Login first
+POST http://localhost:3001/api/login
 Content-Type: application/json
 
 {
-    "course_id": "CSCI-2013"
+    "email": "student@example.com",
+    "password": "securePassword123"
 }
+
+### 2. Register for a course (with auth)
+POST http://localhost:3001/api/register
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIwMTEsImVtYWlsIjoic3R1ZGVudEBleGFtcGxlLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3NTM4ODY4MDQsImV4cCI6MTc1MzkwMTIwNH0.4Tyj2asOoJbNga-rRKMtZ2rP6yO9p4T8CVErLCLWyPo
+Content-Type: application/json
+
+{
+    "courseId": "CSCI-2001"
+}
+
+### 3. Try to register without auth (should fail)
+POST http://localhost:3001/api/register
+Content-Type: application/json
+
+{
+    "courseId": "CSCI-2001"
+}
+
+### 4. Unregister from a course (with auth)
+DELETE http://localhost:3001/api/register/CSCI-2001
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIwMTEsImVtYWlsIjoic3R1ZGVudEBleGFtcGxlLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3NTM4ODY4MDQsImV4cCI6MTc1MzkwMTIwNH0.4Tyj2asOoJbNga-rRKMtZ2rP6yO9p4T8CVErLCLWyPo
+
+### 5. Try to unregister without auth (should fail)
+DELETE http://localhost:3001/api/register/CSCI-2001
