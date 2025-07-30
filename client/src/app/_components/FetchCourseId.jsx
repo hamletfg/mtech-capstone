@@ -5,6 +5,7 @@ import Button from "./Button";
 
 export default function FetchCoursesId({ courseId, userId }) {
   const [courseData, setCourseData] = useState([]);
+  const [isRegistered, setIsRegistered] = useState(false);
   //const [id, setId] = useState(null);
 
   useEffect(() => {
