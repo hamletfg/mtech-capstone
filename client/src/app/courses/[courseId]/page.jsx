@@ -113,9 +113,17 @@ export default function Page({ params }) {
         const data = await res.json();
         console.log("REGISTERED", courseData.course_id, userCourses, data);
       } else if (isRegistered) {
-        const res = await fetch(
-          `/api/register/${resolvedParams.courseId}/unregister`
-        );
+        const res = await fetch(`/api/register/${resolvedParams.courseId}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!res.ok) {
+          throw new Error("Error unregistering");
+        }
       }
     } catch (err) {
       console.error("Error caught:", err);
@@ -124,7 +132,7 @@ export default function Page({ params }) {
 
   return (
     <div className="p-10">
-      <h1>{courseData.title}</h1>
+      <h1>{courseData.title} </h1>
       <div>
         <span>Schedule: </span>
         {courseData.schedule}
@@ -141,8 +149,11 @@ export default function Page({ params }) {
         <span>Tuition cost: </span>
         {courseData.tuition_cost}
       </div>
-      <Button onclick={handleRegister} disabled={isRegistered}>
-        Register
+      <p>
+        {isRegistered ? "(You are already registered for this course)" : ""}
+      </p>
+      <Button onclick={handleRegister}>
+        {isRegistered ? "Unregister" : "Register"}
       </Button>
     </div>
   );
