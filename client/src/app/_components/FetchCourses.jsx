@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Header from "./Header";
 
 export default function FetchCourses({ token }) {
   const [course, setCourses] = useState([]);
@@ -37,28 +38,31 @@ export default function FetchCourses({ token }) {
   }, [token]);
 
   return (
-    <div className="grid grid-cols-4 gap-8 p-10">
-      {course.map((course, index) => {
-        return (
-          <Link
-            href={`/courses/${course.course_id}`}
-            key={index}
-            className="border border-gray-500 p-5 rounded-sm overflow-hidden"
-          >
-            <div>
-              <div className="mb-2">
-                <span>{course.course_id}</span>
-              </div>
-              <div className="mb-2">{course.title}</div>
+    <div>
+      <Header />
+      <div className="grid grid-cols-4 gap-5 p-10">
+        {course.map((course, index) => {
+          return (
+            <Link
+              href={`/courses/${course.course_id}`}
+              key={index}
+              className="bg-gray-200 p-5 rounded-2xl overflow-hidden"
+            >
               <div>
-                <span className="text-sm  line-clamp-3">
-                  {course.description}
-                </span>
+                <div className="mb-2">
+                  <span>{course.course_id}</span>
+                </div>
+                <div className="mb-2">{course.title}</div>
+                <div>
+                  <span className="text-sm  line-clamp-3">
+                    {course.description}
+                  </span>
+                </div>
               </div>
-            </div>
-          </Link>
-        );
-      })}
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 }

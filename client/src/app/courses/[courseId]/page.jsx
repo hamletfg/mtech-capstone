@@ -3,6 +3,7 @@
 import FetchCoursesId from "@/app/_components/FetchCourseId";
 import { use, useEffect, useState } from "react";
 import Button from "@/app/_components/Button";
+import Header from "@/app/_components/Header";
 
 export default function Page({ params }) {
   const [userCourses, setUserCourses] = useState([]);
@@ -111,7 +112,12 @@ export default function Page({ params }) {
           throw new Error("Error registering");
         }
         const data = await res.json();
-        console.log("REGISTERED", courseData.course_id, userCourses, data);
+
+        setUserCourses((prev) => [
+          ...prev,
+          { course_id: resolvedParams.courseId },
+        ]);
+        setIsRegistered(true);
       } else if (isRegistered) {
         const res = await fetch(`/api/register/${resolvedParams.courseId}`, {
           method: "DELETE",
@@ -124,6 +130,11 @@ export default function Page({ params }) {
         if (!res.ok) {
           throw new Error("Error unregistering");
         }
+
+        setUserCourses((prev) =>
+          prev.filter((course) => course.course_id !== resolvedParams.courseId)
+        );
+        setIsRegistered(false);
       }
     } catch (err) {
       console.error("Error caught:", err);
@@ -131,30 +142,33 @@ export default function Page({ params }) {
   };
 
   return (
-    <div className="p-10">
-      <h1>{courseData.title} </h1>
-      <div>
-        <span>Schedule: </span>
-        {courseData.schedule}
+    <div>
+      <Header />
+      <div className="p-10">
+        <h1>{courseData.title} </h1>
+        <div>
+          <span>Schedule: </span>
+          {courseData.schedule}
+        </div>
+        <div>
+          <span>Classroom number: </span>
+          {courseData.classroom_number}
+        </div>
+        <div>
+          <span>Credit hours: </span>
+          {courseData.credit_hours}
+        </div>
+        <div>
+          <span>Tuition cost: </span>
+          {courseData.tuition_cost}
+        </div>
+        <p>
+          {isRegistered ? "(You are already registered for this course)" : ""}
+        </p>
+        <Button onclick={handleRegister}>
+          {isRegistered ? "Unregister" : "Register"}
+        </Button>
       </div>
-      <div>
-        <span>Classroom number: </span>
-        {courseData.classroom_number}
-      </div>
-      <div>
-        <span>Credit hours: </span>
-        {courseData.credit_hours}
-      </div>
-      <div>
-        <span>Tuition cost: </span>
-        {courseData.tuition_cost}
-      </div>
-      <p>
-        {isRegistered ? "(You are already registered for this course)" : ""}
-      </p>
-      <Button onclick={handleRegister}>
-        {isRegistered ? "Unregister" : "Register"}
-      </Button>
     </div>
   );
 }
