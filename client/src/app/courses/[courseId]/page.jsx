@@ -144,8 +144,8 @@ export default function Page({ params }) {
   return (
     <div>
       <Header />
-      <div className="p-10">
-        <h1>{courseData.title} </h1>
+      <div className="p-10 grid grid-cols-2">
+        <h1 className="col-span-2 text-2xl mb-5">{courseData.title}</h1>
         <div>
           <span>Schedule: </span>
           {courseData.schedule}
@@ -162,12 +162,17 @@ export default function Page({ params }) {
           <span>Tuition cost: </span>
           {courseData.tuition_cost}
         </div>
-        <p>
-          {isRegistered ? "(You are already registered for this course)" : ""}
-        </p>
-        <Button onclick={handleRegister}>
-          {isRegistered ? "Unregister" : "Register"}
-        </Button>
+        <div className="col-span-2 my-5">
+          <p>{courseData.description}</p>
+        </div>
+        <div className="col-span-2">
+          <Button onclick={handleRegister}>
+            {isRegistered ? "Unregister" : "Register"}
+          </Button>
+          <p>
+            {isRegistered ? "(You are already registered for this course)" : ""}
+          </p>
+        </div>
       </div>
     </div>
   );
