@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import FetchCourses from "../_components/FetchCourses";
 import { useEffect, useState } from "react";
+import FetchProfileData from "../../_components/FetchProfileData";
 
 export default function Page() {
   const [token, setToken] = useState(null);
@@ -12,5 +11,5 @@ export default function Page() {
     setToken(storedToken);
   }, []);
 
-  return <FetchCourses token={token} />;
+  return <FetchProfileData token={token} />;
 }

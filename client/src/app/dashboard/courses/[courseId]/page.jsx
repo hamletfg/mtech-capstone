@@ -3,7 +3,6 @@
 import FetchCoursesId from "@/app/_components/FetchCourseId";
 import { use, useEffect, useState } from "react";
 import Button from "@/app/_components/Button";
-import Header from "@/app/_components/Header";
 
 export default function Page({ params }) {
   const [userCourses, setUserCourses] = useState([]);
@@ -143,7 +142,6 @@ export default function Page({ params }) {
 
   return (
     <div>
-      <Header />
       <div className="p-10 grid grid-cols-2">
         <h1 className="col-span-2 text-2xl mb-5">{courseData.title}</h1>
         <div>

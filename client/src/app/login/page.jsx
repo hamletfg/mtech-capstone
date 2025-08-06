@@ -38,7 +38,7 @@ export default function Page() {
 
       localStorage.setItem("token", data.token);
 
-      nextRouter.push("/courses");
+      nextRouter.push("/dashboard");
     } catch (err) {
       setError(err.message);
     } finally {
