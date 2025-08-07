@@ -1,5 +1,4 @@
 import Button from "../_components/Button";
-import Navigation from "../_components/Navigation";
 import Link from "next/link";
 
 export default function DashboardLayout({ children }) {
@@ -27,8 +26,8 @@ export default function DashboardLayout({ children }) {
           <span>&#128100;</span>
           <span>Profile</span>
         </Link>
-        <div>
-          <Button>Logout</Button>
+        <div className="hover:cursor-pointer hover:bg-gray-100 p-3 mb-3 flex rounded-md">
+          <span>&#8618; Logout</span>
         </div>
       </div>
       <div className="w-[100%]">{children}</div>

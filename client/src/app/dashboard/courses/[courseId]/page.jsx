@@ -141,35 +141,33 @@ export default function Page({ params }) {
   };
 
   return (
-    <div>
-      <div className="p-10 grid grid-cols-2">
+    <div className="bg-gray-100 min-h-screen">
+      <div className="p-10 grid grid-cols-2 ">
         <h1 className="col-span-2 text-2xl mb-5">{courseData.title}</h1>
-        <div>
+        <div className="bg-white rounded-2xl border border-gray-200 p-5">
           <span>Schedule: </span>
           {courseData.schedule}
         </div>
-        <div>
+        <div className="bg-white rounded-2xl border border-gray-200 p-5">
           <span>Classroom number: </span>
           {courseData.classroom_number}
         </div>
-        <div>
+        <div className="bg-white rounded-2xl border border-gray-200 p-5">
           <span>Credit hours: </span>
           {courseData.credit_hours}
         </div>
-        <div>
-          <span>Tuition cost: </span>
+        <div className="bg-white rounded-2xl border border-gray-200 p-5">
+          <span>Tuition cost: $</span>
           {courseData.tuition_cost}
         </div>
-        <div className="col-span-2 my-5">
+        <div className="col-span-2 my-5 bg-white rounded-2xl border border-gray-200 p-5">
           <p>{courseData.description}</p>
         </div>
-        <div className="col-span-2">
+        <div>
           <Button onclick={handleRegister}>
             {isRegistered ? "Unregister" : "Register"}
           </Button>
-          <p>
-            {isRegistered ? "(You are already registered for this course)" : ""}
-          </p>
+          <p>{isRegistered ? "(Registered!)" : ""}</p>
         </div>
       </div>
     </div>
