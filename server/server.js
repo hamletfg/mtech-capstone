@@ -10,6 +10,7 @@ const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
 const profileRouter = require('./routes/profile');
 const registrationsRouter = require('./routes/registrations');
+const adminUsersRouter = require('./routes/admin/users');
 const cors = require('cors');
 
 const app = express();
@@ -51,6 +52,7 @@ app.use('/api/join', joinRouter);
 app.use('/api/register', registerRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/registrations', registrationsRouter);
+app.use('/api/admin/users', adminUsersRouter);
 
 app.get('/api/admin-tools/users', async (req, res) => {
   try {

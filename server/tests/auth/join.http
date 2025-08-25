@@ -18,5 +18,23 @@ Content-Type: application/json
     "country": "USA"
 }
 
+### Create admin user
+POST http://localhost:3001/api/join
+Content-Type: application/json
+
+{
+    "email": "admin@example.com",
+    "password": "adminpass123",
+    "firstName": "Admin",
+    "lastName": "User",
+    "telephone": "123-456-7890",
+    "street": "123 Admin Street",
+    "city": "Admin City",
+    "state": "UT",
+    "zip_code": "84123",
+    "country": "USA",
+    "isAdmin": true
+}
+
 ###
 GET {{baseUrl}}/admin-tools/users
