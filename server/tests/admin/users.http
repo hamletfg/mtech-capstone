@@ -1,0 +1,53 @@
+### 1. Login as admin
+POST http://localhost:3001/api/login
+Content-Type: application/json
+
+{
+    "email": "admin@example.com",
+    "password": "adminpass123"
+}
+
+### 2. Get all users (admin only)
+GET http://localhost:3001/api/admin/users
+Authorization: Bearer {{token_from_login}}
+
+### 3. Create new user (admin only)
+POST http://localhost:3001/api/admin/users
+Authorization: Bearer {{token_from_login}}
+Content-Type: application/json
+
+{
+    "email": "newuser@example.com",
+    "password": "password123",
+    "firstName": "New",
+    "lastName": "User",
+    "telephone": "123-456-7890",
+    "street": "123 Main St",
+    "city": "Anytown",
+    "state": "UT",
+    "zipCode": "84123",
+    "country": "USA",
+    "isAdmin": false
+}
+
+### 4. Update user (admin only)
+PUT http://localhost:3001/api/admin/users/2001
+Authorization: Bearer {{token_from_login}}
+Content-Type: application/json
+
+{
+    "email": "updated@example.com",
+    "firstName": "Updated",
+    "lastName": "User",
+    "telephone": "123-456-7890",
+    "street": "456 Main St",
+    "city": "Newtown",
+    "state": "UT",
+    "zipCode": "84124",
+    "country": "USA",
+    "isAdmin": false
+}
+
+### 5. Delete user (admin only)
+DELETE http://localhost:3001/api/admin/users/2001
+Authorization: Bearer {{token_from_login}}
