@@ -1,27 +1,27 @@
-const express = require("express");
+const express = require('express');
 const joinRouter = express.Router();
-const db = require("../db/db");
-const bcrypt = require("bcrypt");
+const db = require('../db/db');
+const bcrypt = require('bcrypt');
 const {
   validateRegistration,
   checkValidationErrors,
-} = require("../middleware/validation");
+} = require('../middleware/validation');
 
 const SALT_ROUNDS = 10;
 
 // Registration route with validation middleware
 joinRouter.post(
-  "/",
+  '/',
   validateRegistration,
   checkValidationErrors,
   async (req, res) => {
     // Get a client from the connection pool
-    console.log("endpoint hit");
+    console.log('endpoint hit');
     const client = await db.pool.connect();
 
     try {
       // Start transaction
-      await client.query("BEGIN");
+      await client.query('BEGIN');
 
       // Hash the password
       const hashedPassword = await bcrypt.hash(req.body.password, SALT_ROUNDS);
@@ -61,35 +61,35 @@ joinRouter.post(
           req.body.firstName,
           req.body.lastName,
           req.body.telephone,
-          false, // Default is_admin to false for new registrations
+          req.body.isAdmin || false, // Default is_admin to false for new registrations
           addressId,
         ]
       );
 
       // Commit transaction
-      await client.query("COMMIT");
+      await client.query('COMMIT');
 
       // Send success response
       res.status(201).json({
-        message: "Registration successful",
+        message: 'Registration successful',
         userId: userResult.rows[0].user_id,
         addressId: addressId,
       });
     } catch (err) {
       // Rollback transaction on error
-      await client.query("ROLLBACK");
-      console.error("Transaction Error:", err);
+      await client.query('ROLLBACK');
+      console.error('Transaction Error:', err);
 
       // Handle specific error cases
-      if (err.constraint === "users_email_key") {
+      if (err.constraint === 'users_email_key') {
         res.status(409).json({
-          error: "Email already exists",
+          error: 'Email already exists',
         });
       } else {
         res.status(500).json({
-          error: "Registration failed",
+          error: 'Registration failed',
           details:
-            process.env.NODE_ENV === "development" ? err.message : undefined,
+            process.env.NODE_ENV === 'development' ? err.message : undefined,
         });
       }
     } finally {

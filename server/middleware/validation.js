@@ -13,6 +13,10 @@ const validateRegistration = [
   body('state').notEmpty().trim().withMessage('State is required'),
   body('zip_code').notEmpty().trim().withMessage('Zip code is required'),
   body('country').notEmpty().trim().withMessage('Country is required'),
+  body('isAdmin')
+    .optional()
+    .isBoolean()
+    .withMessage('isAdmin must be a boolean value'),
 ];
 
 const validateLogin = [
