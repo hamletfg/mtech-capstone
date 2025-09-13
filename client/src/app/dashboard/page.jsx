@@ -19,7 +19,7 @@ export default function Page() {
         <Link href="/dashboard">
           <div className="bg-white rounded-2xl border border-gray-200 p-10">
             <span>&#128205;</span>
-            <span>Placeholder</span>
+            <span>Something else</span>
           </div>
         </Link>
       </div>
